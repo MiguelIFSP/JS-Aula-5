@@ -1,6 +1,3 @@
-7. Repetição
-Com o for repetimos comandos:
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -12,39 +9,70 @@ Com o for repetimos comandos:
 	    color: white;
 	    background-color:  black;
 	}
+    td {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        border: 1px solid #ccc;
+    }
+    table {
+        border-collapse: collapse; /* Colapsa bordas da tabela */
+        margin-bottom: 10px;
+    }
     </style>
     <script>
 	window.onload = inicio;
 
 	function inicio() {
-	    let botao = document.getElementById('btnGera');
-	    botao.addEventListener('click', gera);
+	    let botaoGera = document.getElementById('btnGera');
+	    botaoGera.addEventListener('click', gera);
+
+        let botaoMarca = document.getElementById('btnMarca');
+        botaoMarca.addEventListener('click', marcaDia);
 	}
+
 	function gera() {
 	    let tabela = document.getElementsByTagName('table')[0];
 	    let elementos = '';
 
-	    elementos += '<tr>';
-	    for(var i = 0; i < 10; i++) {
-		if( i % 7 == 0 ) {
-		    elementos += '</tr><tr>';
-		} 
-		elementos += '<td>' + i + '</td>';
+        elementos += '<tr>';
+
+	    for(let i = 1; i <= 31; i++) {
+		    if( i > 1 && (i - 1) % 7 === 0 ) {
+		        elementos += '</tr><tr>';
+		    }
+		    elementos += '<td id="day_' + i + '">' + i + '</td>';
 	    }
+
 	    elementos += '</tr>';
 	    tabela.innerHTML = elementos;
 	 }
+
+     function marcaDia() {
+        let campoNumero = document.getElementById('numero');
+        let diaParaMarcar = parseInt(campoNumero.value);
+
+        let todasCelulas = document.getElementsByTagName('td');
+        for (let i = 0; i < todasCelulas.length; i++) {
+            todasCelulas[i].className = '';
+        }
+
+        if (diaParaMarcar >= 1 && diaParaMarcar <= 31) {
+            let celulaDia = document.getElementById('day_' + diaParaMarcar);
+
+            if (celulaDia) {
+                celulaDia.className = 'dark';
+            }
+        }
+     }
     </script>
 </head>
 <body>
     <table>
-
     </table>
-    <input type="button" value="Gera" id="btnGera"><br>
-    <label for="">Dia:</label>
+    <input type="button" value="Gera Calendário" id="btnGera"><br>
+    <label for="numero">Dia para Marcar:</label>
     <input type="text" id="numero" value="0">
-    <input type="button" value="Marca" id="btnMarca">
+    <input type="button" value="Marca Dia" id="btnMarca">
 </body>
 </html>
-7.1. Exercícios
-Ajuste a página anterior para gerar um mês de 31 dias e marcar o dia escolhido como dark.
